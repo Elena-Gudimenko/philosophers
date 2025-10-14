@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elvictor <elvictor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 20:51:30 by elvictor          #+#    #+#             */
-/*   Updated: 2025/07/02 19:13:54 by elvictor         ###   ########.fr       */
+/*   Created: 2025/07/03 17:36:54 by elvictor          #+#    #+#             */
+/*   Updated: 2025/07/04 14:31:25 by elvictor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+void	wait_all_threads(t_table *table)
 {
-	t_table	table;
-
-	if (argc == 5 || argc == 6)
-	{
-		parse_input(&table, argv);
-		data_init(&table);
-		dinner_start(&table);
-		//clean(&table);
-	}
-	else
-	{
-		error_exit("Wrong input:\n"
-			"Correct is ./philo 5 800 200 200 [5]");
-	}
+	while (!get_bool(&table->table_mutex, &table->all_threads_ready))
+		;
 }
 
+bool	threads_running(t_mtx *mutex, long *threads, long philo_nbr)
+{
+	bool	res;
+
+	res = false;
+	mutex_handle(mutex, LOCK);
+	if (*threads == philo_nbr)
+		res = true;
+	mutex_handle(mutex, UNLOCK);
+	return (res);
+}
+
+void	increase_long(t_mtx *mutex, long *value)
+{
+	mutex_handle(mutex, LOCK);
+	(*value)++;
+	mutex_handle(mutex, UNLOCK);
+}

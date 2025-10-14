@@ -1,5 +1,5 @@
 
-#include "..include/philo.h"
+#include "../include/philo.h"
 
 void    *ft_malloc(size_t bytes)
 {

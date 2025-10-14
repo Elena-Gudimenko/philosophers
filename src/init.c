@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "..include/philo.h"
+#include "../include/philo.h"
 
 static void assign_forks(t_philo *philo, t_fork *forks, int philo_position)
 {
@@ -37,9 +37,9 @@ static void	philo_init(t_table *table)
 		philo = table->philos + i;
 		philo->id = i + 1;
 		philo->is_full = false;
-		philo->meals_count = 0;
+		philo->meals_eaten = 0;
 		philo->table = table;
-		mutex_handler(&philo->philo_mutex, INIT);
+		mutex_handle(&philo->philo_mutex, INIT);
 		assign_forks(philo, table->forks, i);
 	}
 }
@@ -50,7 +50,7 @@ void    data_init(t_table *table)
 
 	i = -1;
 	table->end_simulation = false;
-	table->threads_ready = false;
+	table->all_threads_ready = false;
 	table->threads_running_nbr = 0;
 	table->philos = ft_malloc(sizeof(t_philo) * table->philo_nbr);
 	table->forks = ft_malloc(sizeof(t_fork) * table->philo_nbr);
