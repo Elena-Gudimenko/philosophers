@@ -36,3 +36,17 @@ void	increase_long(t_mtx *mutex, long *value)
 	(*value)++;
 	mutex_handle(mutex, UNLOCK);
 }
+
+void	unsync_philos(t_philo *philo)
+{
+	if (philo->table->philo_nbr % 2 == 0)
+	{
+		if (philo->id % 2 == 0)
+			precise_usleep(3e4, philo->table);
+	}
+	else
+	{
+		if (philo->id % 2)
+			thinking(philo, true);
+	}
+}

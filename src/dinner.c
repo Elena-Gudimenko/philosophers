@@ -63,7 +63,7 @@ void    *dinner_simulation(void *data)
 		ft_gettime(MILLISECOND));
 	increase_long(&philo->table->table_mutex,
 		&philo->table->threads_running_nbr);
-	//unsync_philos(philo);
+	unsync_philos(philo);
     while (!simulation_is_finished(philo->table))
 	{
 		if (philo->is_full)
@@ -98,5 +98,6 @@ void    dinner_start(t_table *table)
     i = -1;
 	while (++i < table->philo_nbr)
 		thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
-
+	set_bool(&table->table_mutex, &table->end_simulation, true);
+	thread_handle(&table->monitor, NULL, NULL, JOIN);
 }

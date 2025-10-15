@@ -1,4 +1,7 @@
 
+#ifndef PHILO_H
+# define PHILO_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -108,6 +111,7 @@ bool	simulation_is_finished(t_table *table);
 void	wait_all_threads(t_table *table);
 bool	threads_running(t_mtx *mutex, long *threads, long philo_nbr);
 void	increase_long(t_mtx *mutex, long *value);
+void	unsync_philos(t_philo *philo);
 
 // Write
 void	write_status(t_philo_status status, t_philo *philo, bool debug);
@@ -117,6 +121,11 @@ void	*monitor_dinner(void *data);
 
 // Dinner
 void	thinking(t_philo *philo, bool pre_simulation);
+
+// Cleaning
+void	cleaning(t_table *table);
+
+#endif
 
 
 
